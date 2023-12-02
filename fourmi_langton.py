@@ -1,4 +1,4 @@
-﻿from tkinter import *
+from tkinter import *
 
 HAUT = 0
 GAUCHE= 1
@@ -38,7 +38,7 @@ class Fourmi:
         self.couleur_dessin = couleur_dessin
 
     def change_couleur(self):
-
+        print(self.pos_x,self.pos_y)
         if grille[self.pos_x][self.pos_y]==OCCUPE:
             grille[self.pos_x][self.pos_y]=VIDE
             self.canvas.dessine_case(self.pos_x,self.pos_y,self.couleur_dessin)
@@ -47,6 +47,23 @@ class Fourmi:
             grille[self.pos_x][self.pos_y]=OCCUPE
             self.canvas.dessine_case(self.pos_x,self.pos_y,'white')
 
+        if self.pos_x<0: # corrige
+            self.pos_x=TAILLE_GRILLE-1
+            self.pos_y=TAILLE_GRILLE-self.pos_y
+        """ corrige
+        elif self.pos_x>TAILLE_GRILLE:
+            self.pos_x=0
+            self.pos_y=TAILLE_GRILLE-self.pos_y
+
+        elif self.pos_x<0:
+            self.pos_x=TAILLE_GRILLE
+            self.pos_y=TAILLE_GRILLE-self.pos_y
+
+        elif self.pos_x<0:
+            self.pos_x=TAILLE_GRILLE
+            self.pos_y=TAILLE_GRILLE-self.pos_y
+        
+        """
     def step(self):
 
         if grille[self.pos_x][self.pos_y]==VIDE:
@@ -94,13 +111,13 @@ if __name__ == "__main__":
     canvas = CanvasFourmi(fenetre_principale)
 
     f1 = Fourmi(grille, canvas, 50, 50,'black')
-    f2 = Fourmi(grille, canvas, 60, 60, 'red')
-    f3 = Fourmi(grille, canvas, 60, 50, 'green')
+    #f2 = Fourmi(grille, canvas, 60, 60, 'red')
+    #f3 = Fourmi(grille, canvas, 60, 50, 'green')
 
     def fourmis():
         f1.step()
-        f2.step()
-        f3.step()
+        #f2.step()
+        #f3.step()
         fenetre_principale.after(10, fourmis)
 
     fourmis()
